@@ -525,7 +525,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /front_stereo_camera/left/image_raw
+        Value: /image_raw
       Value: true
     - Class: rviz_default_plugins/TF
       Enabled: true

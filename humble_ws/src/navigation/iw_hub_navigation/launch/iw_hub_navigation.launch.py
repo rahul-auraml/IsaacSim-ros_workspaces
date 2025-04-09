@@ -18,6 +18,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration("use_sim_time", default="True")
+    namespace = LaunchConfiguration("namespace", default="")
 
     map_dir = LaunchConfiguration(
         "map",
@@ -46,13 +47,16 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 "use_sim_time", default_value="true", description="Use simulation (Omniverse Isaac Sim) clock if true"
             ),
+            DeclareLaunchArgument(
+                "namespace", default_value="", description="Namespace for the nodes"
+            ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(os.path.join(nav2_bringup_launch_dir, "rviz_launch.py")),
-                launch_arguments={"namespace": "", "use_namespace": "False", "rviz_config": rviz_config_dir}.items(),
+                launch_arguments={"namespace": namespace, "use_namespace": "True", "rviz_config": rviz_config_dir}.items(),
             ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([nav2_bringup_launch_dir, "/bringup_launch.py"]),
-                launch_arguments={"map": map_dir, "use_sim_time": use_sim_time, "params_file": param_dir}.items(),
+                launch_arguments={"map": map_dir, "use_sim_time": use_sim_time, "params_file": param_dir, "namespace": namespace}.items(),
             ),
         ]
     )
